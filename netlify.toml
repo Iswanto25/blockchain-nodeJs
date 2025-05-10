@@ -1,7 +1,7 @@
 [build]
   command = "npm run build"
-  functions = "src/netlify/functions"
-  publish = "src"
+  publish = "src"  # Tentukan folder tempat file statis atau hasil build
+  functions = "src/netlify/functions"  # Tempatkan fungsi di folder ini
 
 [[redirects]]
   from = "/*"
