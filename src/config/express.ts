@@ -33,9 +33,14 @@ app.get("/", (req, res) => {
     message: "Welcome to the Blockchain API",
   })
 })
+
+app.get("/blockchain", (req, res) => {
+  res.redirect("/")
+})
+
 app.use("/blockchain", routes)
 app.get("/favicon.ico", (req, res) => {
-  res.status(204).end() // No Content
+  res.status(204).end()
 })
 
 export default app

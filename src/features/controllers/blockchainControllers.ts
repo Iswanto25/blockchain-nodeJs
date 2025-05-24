@@ -1,30 +1,28 @@
 import { Request, Response } from "express"
-import * as crypto from "crypto"
-import { Blockchain } from "../services/blockchainServices"
+import { blockchainServices } from "../services/blockchainServices"
 import { Transaction } from "../../types/blockchainTypes"
+import { successResponse, errorResponse } from "../../utils/response"
 
-const blockchain = new Blockchain()
-
-export const createGenesisBlock = (req: Request, res: Response) => {
-  const response = blockchain.createGenesisBlock()
-  res.status(200).json({
-    message: "Genesis block created successfully",
-    data: response,
-  })
+const createGenesisBlock = (req: Request, res: Response) => {
+  const response = blockchainServices.createGenesisBlock()
+  if (response instanceof Error) {
+    errorResponse("Failed to create genesis block", response, 500, res)
+  }
+  successResponse("Genesis block created successfully", response, 200, res)
 }
 
-export const getBlockchain = (req: Request, res: Response) => {
-  const response = blockchain.getBlockchain()
-  res.status(200).json({
-    message: "Blockchain retrieved successfully",
-    data: response,
-  })
+const getBlockchain = (req: Request, res: Response) => {
+  const response = blockchainServices.getBlockchain()
+  if (response instanceof Error) {
+    errorResponse("Failed to retrieve blockchain", response, 500, res)
+  }
+  successResponse("Blockchain retrieved successfully", response, 200, res)
 }
 
-export const createTransaction = (req: Request, res: Response) => {
+const createTransaction = (req: Request, res: Response) => {
   const { from, to, amount } = req.body
 
-  const transaction: Transaction = {
+  const response: Transaction = {
     from,
     to,
     amount,
@@ -32,47 +30,37 @@ export const createTransaction = (req: Request, res: Response) => {
   }
 
   try {
-    blockchain.createTransaction(transaction)
-
-    res.status(200).json({
-      message: "Transaction created successfully",
-      data: transaction,
-    })
+    blockchainServices.createTransaction(response)
+    successResponse("Transaction created successfully", response, 201, res)
   } catch (error: any) {
     console.error("Error creating transaction:", error)
-    res.status(500).json({
-      message: "Error creating transaction",
-      error: error.message,
-    })
+    errorResponse("Error creating transaction", error, 500, res)
   }
 }
 
-export const mineBlock = (req: Request, res: Response) => {
-  const { miner } = req.body
-
+const mineBlock = (req: Request, res: Response) => {
   try {
-    const newBlock = blockchain.mineBlock(miner)
-
-    res.status(200).json({
-      message: "Block mined successfully",
-      data: newBlock,
-    })
+    const response = blockchainServices.mineBlock(req.body.miner)
+    successResponse("Block mined successfully", response, 200, res)
   } catch (error: any) {
     console.error("Error mining block:", error)
-    res.status(500).json({
-      message: "Error mining block",
-      error: error.message,
-    })
+    errorResponse("Error mining block", error, 500, res)
   }
-
 }
 
-export const getPendingTransactions = (req: Request, res: Response) => {
-    const pendingTransactions = blockchain.pendingTransactions;
-    
-    res.status(200).json({
-      message: "Pending transactions retrieved successfully",
-      data: pendingTransactions,
-    });
+const getPendingTransactions = (req: Request, res: Response) => {
+  try {
+    const pendingTransactions = blockchainServices.pendingTransactions()
+    successResponse("Pending transactions retrieved successfully", pendingTransactions, 200, res)
+  } catch (error) {
+    errorResponse("Failed to retrieve pending transactions", error, 500, res)
   }
-  
+}
+
+export const blockchainController = {
+  createGenesisBlock,
+  getBlockchain,
+  createTransaction,
+  mineBlock,
+  getPendingTransactions,
+}

@@ -31,9 +31,12 @@ app.get("/", (req, res) => {
         message: "Welcome to the Blockchain API",
     });
 });
+app.get("/blockchain", (req, res) => {
+    res.redirect("/");
+});
 app.use("/blockchain", routes_1.default);
 app.get("/favicon.ico", (req, res) => {
-    res.status(204).end(); // No Content
+    res.status(204).end();
 });
 exports.default = app;
 //# sourceMappingURL=express.js.map
