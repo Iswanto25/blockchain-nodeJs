@@ -1,4 +1,5 @@
 import { walletService } from "../services/walletServices"
+import { blockchainServices } from "../../services/blockchainServices"
 
 export const walletController = {
   generateWallet: async (req: any, res: any) => {
@@ -51,4 +52,27 @@ export const walletController = {
       })
     }
   },
+  getBalance: async (req: any, res: any) => {
+    const { address } = req.body
+
+    if (!address) {
+      return res.status(400).json({
+        message: "Address is required",
+      })
+    }
+
+    try {
+      const balance = blockchainServices.getBalance(address)
+      res.status(200).json({
+        message: "Balance retrieved successfully",
+        data: { address, balance },
+      })
+    } catch (error: any) {
+      console.error("Error retrieving balance:", error)
+      res.status(500).json({
+        message: "Error retrieving balance",
+        error: error.message,
+      })
+    }
+  }
 }

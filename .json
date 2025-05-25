@@ -1,0 +1,19 @@
+{
+    "message": "Wallet generated successfully",
+    "data": [
+    
+        {
+            "mnemonic": "capital squirrel chicken feature man army hood true sniff snack renew settle",
+            "privateKey": "7909548115335d8c71ca0c7ded9e565a8ad42e32182a1f3fe934755850700c38",
+            "publicKey": "040f244f41a3381201c4ec72f5eee840aea399e2afbac9a56564ba6a88c9fbcb2f6e46016f2d13a8e6789ebcabab4ff94a7af4eadc92dedd1fcd0a37d8391087df",
+            "address": "47ed41a81794057bea9784de3f2706a4e10d3ad5c54dd634427f458ac3729dcc"
+            
+        },
+        {
+            "mnemonic": "casual chat toy flag begin rabbit tuition metal today toast labor episode",
+            "privateKey": "a48c5344100a8bf5c6ede86a6020427b6ab6f397afcdf7aec0ae0109f317a4d3",
+            "publicKey": "04d0492466f3f424231a94aad03e5069c8944efcd91735c6246875cc6d449aef0d7dfbd80fac59c20dca9c7913e3dd7e7d4994ac2197ff1984d62693420e34ad31",
+            "address": "3ab9b2e5a92cc8a9477a8ec40052a63c9a2e49ec4ce7527aaea6ce5664269fae"
+        }
+    ]
+}

@@ -53,8 +53,8 @@ export class Blockchain {
 
   public createGenesisBlock(): Block {
     const index = 0
-    const previousHash = "0"
-    const timestamp = Date.now()
+    const previousHash = "5db780ade7b11c93f34932c031f19443"
+    const timestamp = 922374966
     const data = "Genesis Block"
     const nonce = 0
     const difficulty = this.difficulty
@@ -134,6 +134,25 @@ export class Blockchain {
     this.pendingTransactions = []
     return block
   }
+
+  public getBalance(address: string): number {
+    const chain = blockchainInstance.getBlockchain()
+    let balance = 0
+
+    for (const block of chain) {
+      const txs = Array.isArray(block.data) ? block.data : []
+      for (const tx of txs) {
+        if (tx.to === address) {
+          balance += tx.amount
+        }
+        if (tx.from === address) {
+          balance -= tx.amount
+        }
+      }
+    }
+
+    return balance
+  }
 }
 
 const blockchainInstance = new Blockchain()
@@ -166,4 +185,8 @@ export const blockchainServices = {
   setBlockchain: (chain: Block[]) => {
     blockchainInstance.chain = chain
   },
+
+  getBalance: (address: string) => {
+    return blockchainInstance.getBalance(address)
+  }
 }

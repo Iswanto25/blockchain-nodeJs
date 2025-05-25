@@ -1,10 +1,11 @@
 import { Request, Response } from "express"
 import { blockchainServices } from "../services/blockchainServices"
+import { walletService, WalletKeys } from "../wallet/services/walletServices"
 import { synchronizeChainFromPeer } from "../services/syncServices"
 import { Transaction } from "../../types/blockchainTypes"
 import { successResponse, errorResponse } from "../../utils/response"
 
-const createGenesisBlock = (req: Request, res: Response) => {
+const createGenesisBlock = async (req: Request, res: Response) => {
   const response = blockchainServices.createGenesisBlock()
   if (response instanceof Error) {
     errorResponse("Failed to create genesis block", response, 500, res)
@@ -12,7 +13,7 @@ const createGenesisBlock = (req: Request, res: Response) => {
   successResponse("Genesis block created successfully", response, 200, res)
 }
 
-const getBlockchain = (req: Request, res: Response) => {
+const getBlockchain = async (req: Request, res: Response) => {
   const response = blockchainServices.getBlockchain()
   if (response instanceof Error) {
     errorResponse("Failed to retrieve blockchain", response, 500, res)
@@ -20,14 +21,30 @@ const getBlockchain = (req: Request, res: Response) => {
   successResponse("Blockchain retrieved successfully", response, 200, res)
 }
 
-const createTransaction = (req: Request, res: Response) => {
-  const { from, to, amount } = req.body
+const createTransaction = async (req: Request, res: Response) => {
+  const { mnemonic, from, to, amount } = req.body
+  if (!mnemonic || !from || !to || !amount) {
+    return errorResponse("Missing required fields: mnemonic, from, to, amount", null, 400, res)
+  }
+
+  const {privateKey, publicKey, address} = await walletService.restoreWallet(mnemonic)
 
   const response: Transaction = {
     from,
     to,
     amount,
     timestamp: Date.now(),
+    publicKey,
+  }
+
+  if (from !== address) {
+    return errorResponse("Transaction 'from' address does not match restored wallet address", null, 400, res)
+  }
+
+  response.signature = walletService.signTransaction(response, privateKey)
+
+  if (!walletService.verifySignature(response)) {
+    return errorResponse("Invalid transaction signature", null, 400, res)
   }
 
   try {
@@ -39,7 +56,26 @@ const createTransaction = (req: Request, res: Response) => {
   }
 }
 
-const mineBlock = (req: Request, res: Response) => {
+// const createTransaction = (req: Request, res: Response) => {
+//   const { from, to, amount } = req.body
+
+//   const response: Transaction = {
+//     from,
+//     to,
+//     amount,
+//     timestamp: Date.now(),
+//   }
+
+//   try {
+//     blockchainServices.createTransaction(response)
+//     successResponse("Transaction created successfully", response, 201, res)
+//   } catch (error: any) {
+//     console.error("Error creating transaction:", error)
+//     errorResponse("Error creating transaction", error, 500, res)
+//   }
+// }
+
+const mineBlock = async (req: Request, res: Response) => {
   try {
     const response = blockchainServices.mineBlock(req.body.miner)
     successResponse("Block mined successfully", response, 200, res)
@@ -49,7 +85,7 @@ const mineBlock = (req: Request, res: Response) => {
   }
 }
 
-const getPendingTransactions = (req: Request, res: Response) => {
+const getPendingTransactions = async (req: Request, res: Response) => {
   try {
     const pendingTransactions = blockchainServices.pendingTransactions()
     successResponse("Pending transactions retrieved successfully", pendingTransactions, 200, res)
