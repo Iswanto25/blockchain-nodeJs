@@ -10,6 +10,7 @@ router.get("/genesis", blockchainController.createGenesisBlock)
 router.post("/transaction", blockchainController.createTransaction)
 router.post("/mine", blockchainController.mineBlock)
 router.get("/pending-transactions", blockchainController.getPendingTransactions)
+router.get("/sync/:port", blockchainController.synchronizeChain)
 
 router.post("/generate-wallet", walletController.generateWallet)
 router.post("/restore-wallet", walletController.restoreWallet)

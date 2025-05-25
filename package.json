@@ -15,6 +15,7 @@
   "dependencies": {
     "@netlify/functions": "^3.0.4",
     "@vercel/speed-insights": "^1.2.0",
+    "axios": "^1.9.0",
     "bip39": "^3.1.0",
     "crypto": "^1.0.1",
     "elliptic": "^6.6.1",
@@ -24,6 +25,7 @@
     "serverless-http": "^3.2.0"
   },
   "devDependencies": {
+    "@types/axios": "^0.9.36",
     "@types/elliptic": "^6.4.18",
     "@types/express": "^5.0.1",
     "@types/morgan": "^1.9.9",
