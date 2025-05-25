@@ -2,7 +2,8 @@ import { SpeedInsights } from "@vercel/speed-insights/next"
 import express from "express"
 import morgan from "morgan"
 import moment from "moment"
-import routes from "../routes/routes"
+import chainRoutes from "../routes/chainRoutes"
+import walletRoutes from "../routes/walletRoutes"
 
 const app = express()
 
@@ -39,7 +40,8 @@ app.get("/blockchain", (req, res) => {
   res.redirect("/")
 })
 
-app.use("/blockchain", routes)
+app.use("/blockchain", chainRoutes )
+app.use("/wallet", walletRoutes)
 app.get("/favicon.ico", (req, res) => {
   res.status(204).end()
 })
