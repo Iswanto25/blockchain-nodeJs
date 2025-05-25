@@ -162,4 +162,8 @@ export const blockchainServices = {
   pendingTransactions: () => {
     return blockchainInstance.pendingTransactions
   },
+
+  setBlockchain: (chain: Block[]) => {
+    blockchainInstance.chain = chain
+  },
 }

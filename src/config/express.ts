@@ -31,6 +31,7 @@ app.get("/", (req, res) => {
   res.status(200).json({
     status: "success",
     message: "Welcome to the Blockchain API",
+    version: "1.0.0",
   })
 })
 

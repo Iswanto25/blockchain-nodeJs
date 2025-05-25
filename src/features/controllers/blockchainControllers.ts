@@ -1,5 +1,6 @@
 import { Request, Response } from "express"
 import { blockchainServices } from "../services/blockchainServices"
+import { synchronizeChainFromPeer } from "../services/syncServices"
 import { Transaction } from "../../types/blockchainTypes"
 import { successResponse, errorResponse } from "../../utils/response"
 
@@ -57,10 +58,31 @@ const getPendingTransactions = (req: Request, res: Response) => {
   }
 }
 
+const synchronizeChain = async (req: Request, res: Response) => {
+  try {
+    const port = req.params.port
+    if (!port) {
+      return errorResponse("Peer URL is required", null, 400, res)
+    }
+    console.info(`Synchronizing blockchain from peer at port: ${port}`)
+    const peerUrl = `http://localhost:${port}`
+    const response = await synchronizeChainFromPeer(peerUrl)
+    if (response) {
+      successResponse("Blockchain synchronized from peer successfully", response.chain, 200, res)
+    } else {
+      errorResponse("Failed to synchronize blockchain from peer", null, 400, res)
+    }
+  } catch (error) {
+    console.error("Error synchronizing blockchain:", error)
+    errorResponse("Error synchronizing blockchain", error, 500, res)
+  }
+}
+
 export const blockchainController = {
   createGenesisBlock,
   getBlockchain,
   createTransaction,
   mineBlock,
   getPendingTransactions,
+  synchronizeChain,
 }
