@@ -1,20 +1,15 @@
 import { walletService } from "../services/walletServices"
-import { blockchainServices } from "../../services/blockchainServices"
+import { blockchainServices } from "../../chain/services/blockchainServices"
+import { successResponse, errorResponse } from "../../../utils/response"
 
 export const walletController = {
   generateWallet: async (req: any, res: any) => {
     try {
       const wallet = await walletService.generateWallet()
-      res.status(200).json({
-        message: "Wallet generated successfully",
-        data: wallet,
-      })
+      successResponse("Wallet generated successfully", wallet, 200, res)
     } catch (error: any) {
       console.error("Error generating wallet:", error)
-      res.status(500).json({
-        message: "Error generating wallet",
-        error: error.message,
-      })
+      errorResponse("Error generating wallet", error, 500, res)
     }
   },
 
@@ -23,16 +18,10 @@ export const walletController = {
 
     try {
       const wallet = await walletService.restoreWallet(mnemonic)
-      res.status(200).json({
-        message: "Wallet restored successfully",
-        data: wallet,
-      })
+      successResponse("Wallet restored successfully", wallet, 200, res)
     } catch (error: any) {
       console.error("Error restoring wallet:", error)
-      res.status(500).json({
-        message: "Error restoring wallet",
-        error: error.message,
-      })
+      errorResponse("Error restoring wallet", error, 500, res)
     }
   },
   getWalletAddress: (req: any, res: any) => {
@@ -40,39 +29,25 @@ export const walletController = {
 
     try {
       const address = walletService.getWalletAddress(publicKey)
-      res.status(200).json({
-        message: "Wallet address retrieved successfully",
-        data: address,
-      })
+      successResponse("Wallet address retrieved successfully", { address }, 200, res)
     } catch (error: any) {
       console.error("Error retrieving wallet address:", error)
-      res.status(500).json({
-        message: "Error retrieving wallet address",
-        error: error.message,
-      })
+      errorResponse("Error retrieving wallet address", error, 500, res)
     }
   },
   getBalance: async (req: any, res: any) => {
     const { address } = req.body
 
     if (!address) {
-      return res.status(400).json({
-        message: "Address is required",
-      })
+      errorResponse("Address is required", "Address not provided", 400, res)
     }
 
     try {
       const balance = blockchainServices.getBalance(address)
-      res.status(200).json({
-        message: "Balance retrieved successfully",
-        data: { address, balance },
-      })
+      successResponse("Balance retrieved successfully", { balance }, 200, res)
     } catch (error: any) {
       console.error("Error retrieving balance:", error)
-      res.status(500).json({
-        message: "Error retrieving balance",
-        error: error.message,
-      })
+      errorResponse("Error retrieving balance", error, 500, res)
     }
-  }
+  },
 }

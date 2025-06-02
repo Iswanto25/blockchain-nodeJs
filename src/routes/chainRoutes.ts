@@ -1,5 +1,5 @@
 import express from "express"
-import { blockchainController } from "../features/controllers/blockchainControllers"
+import { blockchainController } from "../features/chain/controllers/blockchainControllers"
 
 const router = express.Router()
 
