@@ -77,23 +77,23 @@ const getPendingTransactions = async (req: Request, res: Response) => {
 
 const synchronizeChain = async (req: Request, res: Response) => {
   try {
-    const port = req.params.port
-    if (!port) {
+    const { peer } = req.body
+    if (!peer) {
       return errorResponse("Peer URL is required", null, 400, res)
     }
-    console.info(`Synchronizing blockchain from peer at port: ${port}`)
-    const peerUrl = `http://localhost:${port}`
-    const response = await synchronizeChainFromPeer(peerUrl)
-    if (response) {
-      successResponse("Blockchain synchronized from peer successfully", response.chain, 200, res)
+
+    const response = await synchronizeChainFromPeer(peer)
+    if (response.success) {
+      return successResponse("Blockchain synchronized from peer successfully", response.chain, 200, res)
     } else {
-      errorResponse("Failed to synchronize blockchain from peer", null, 400, res)
+      return errorResponse("Failed to synchronize blockchain from peer", null, 400, res)
     }
   } catch (error) {
     console.error("Error synchronizing blockchain:", error)
-    errorResponse("Error synchronizing blockchain", error, 500, res)
+    return errorResponse("Internal server error during sync", error, 500, res)
   }
 }
+
 
 export const blockchainController = {
   createGenesisBlock,

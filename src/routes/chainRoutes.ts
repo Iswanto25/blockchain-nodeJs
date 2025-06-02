@@ -9,6 +9,6 @@ router.get("/genesis", blockchainController.createGenesisBlock)
 router.post("/transaction", blockchainController.createTransaction)
 router.post("/mine", blockchainController.mineBlock)
 router.get("/pending-transactions", blockchainController.getPendingTransactions)
-router.get("/sync/:port", blockchainController.synchronizeChain)
+router.post("/sync", blockchainController.synchronizeChain)
 
 export default router
