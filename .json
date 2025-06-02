@@ -14,6 +14,12 @@
             "privateKey": "a48c5344100a8bf5c6ede86a6020427b6ab6f397afcdf7aec0ae0109f317a4d3",
             "publicKey": "04d0492466f3f424231a94aad03e5069c8944efcd91735c6246875cc6d449aef0d7dfbd80fac59c20dca9c7913e3dd7e7d4994ac2197ff1984d62693420e34ad31",
             "address": "3ab9b2e5a92cc8a9477a8ec40052a63c9a2e49ec4ce7527aaea6ce5664269fae"
+        },
+        {
+            "mnemonic": "canal mail obvious solve vicious cupboard armor square alter impulse average clay",
+            "privateKey": "747fd314d0d9f60e592e98627e39cfe75e5d9a4f835b81ed0b3028cef67678ee",
+            "publicKey": "048e46d8a7ea36ccdbf590388e6a98f3e0cf4c95cc655aa5422eeeb546217af5d4c5246e9d509f75578c752771d832c469f6612a33dc769e20b42aac5291acef16",
+            "address": "7ab7e8011243ba47159b4f0b8573e42bfada50d3fe25a15055cb7e01c81a5a43"
         }
     ]
 }

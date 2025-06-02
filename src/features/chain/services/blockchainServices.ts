@@ -1,5 +1,5 @@
 import * as crypto from "crypto"
-import { Block as BlockchainBlock } from "../../types/blockchainTypes"
+import { Block as BlockchainBlock } from "../../../types/blockchainTypes"
 
 class Block implements BlockchainBlock {
   index: number

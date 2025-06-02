@@ -1,9 +1,9 @@
 import { Request, Response } from "express"
 import { blockchainServices } from "../services/blockchainServices"
-import { walletService, WalletKeys } from "../wallet/services/walletServices"
+import { walletService } from "../../wallet/services/walletServices"
 import { synchronizeChainFromPeer } from "../services/syncServices"
-import { Transaction } from "../../types/blockchainTypes"
-import { successResponse, errorResponse } from "../../utils/response"
+import { Transaction } from "../../../types/blockchainTypes"
+import { successResponse, errorResponse } from "../../../utils/response"
 
 const createGenesisBlock = async (req: Request, res: Response) => {
   const response = blockchainServices.createGenesisBlock()
@@ -55,25 +55,6 @@ const createTransaction = async (req: Request, res: Response) => {
     errorResponse("Error creating transaction", error, 500, res)
   }
 }
-
-// const createTransaction = (req: Request, res: Response) => {
-//   const { from, to, amount } = req.body
-
-//   const response: Transaction = {
-//     from,
-//     to,
-//     amount,
-//     timestamp: Date.now(),
-//   }
-
-//   try {
-//     blockchainServices.createTransaction(response)
-//     successResponse("Transaction created successfully", response, 201, res)
-//   } catch (error: any) {
-//     console.error("Error creating transaction:", error)
-//     errorResponse("Error creating transaction", error, 500, res)
-//   }
-// }
 
 const mineBlock = async (req: Request, res: Response) => {
   try {

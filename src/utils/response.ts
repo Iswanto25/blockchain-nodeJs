@@ -15,7 +15,7 @@ export const errorResponse = (message: string, error: any, code: number, res: Re
     error,
   })
 }
-export class apiError extends Error {
+export class ApiError extends Error {
   statusCode: number
 
   constructor(message: string, statusCode = 500) {
