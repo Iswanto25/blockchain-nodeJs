@@ -1,4 +1,3 @@
-import { SpeedInsights } from "@vercel/speed-insights/next"
 import express from "express"
 import morgan from "morgan"
 import moment from "moment"
