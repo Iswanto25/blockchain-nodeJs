@@ -6,6 +6,10 @@ import walletRoutes from "../routes/walletRoutes"
 
 const app = express()
 
+morgan.token("date", () => {
+	return moment().format("DD/MMM/YYYY:HH:mm:ss ZZ");
+})
+
 app.use((req, res, next) => {
   const forwardedForHeader = req.headers["x-forwarded-for"]
   const forwardedFor = Array.isArray(forwardedForHeader) ? forwardedForHeader[0] : forwardedForHeader
@@ -23,7 +27,7 @@ app.use((req, res, next) => {
   next()
 })
 
-app.use(morgan("dev"))
+app.use(morgan("combined"))
 app.use(express.json({ limit: "10mb" }))
 app.set("trust proxy", true)
 
