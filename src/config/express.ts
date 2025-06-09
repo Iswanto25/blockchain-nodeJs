@@ -6,6 +6,7 @@ import walletRoutes from "../routes/walletRoutes"
 
 const app = express()
 
+moment.locale("id");
 morgan.token("date", () => {
 	return moment().format("DD/MMM/YYYY:HH:mm:ss ZZ");
 })
