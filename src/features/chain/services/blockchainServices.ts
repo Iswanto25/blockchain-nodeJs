@@ -136,7 +136,7 @@ export class Blockchain {
   }
 
   public getBalance(address: string): number {
-    const chain = blockchainInstance.getBlockchain()
+    const chain = this.chain
     let balance = 0
 
     for (const block of chain) {
@@ -188,5 +188,5 @@ export const blockchainServices = {
 
   getBalance: (address: string) => {
     return blockchainInstance.getBalance(address)
-  }
+  },
 }
