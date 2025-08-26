@@ -39,6 +39,7 @@ env:
   CONTAINER_NAME: blockchain
 
 permissions:
+  id-token: write
   contents: read
 
 jobs:
