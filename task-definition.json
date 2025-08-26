@@ -39,7 +39,6 @@
         }
     ],
     "cpu": "1024",
-    "enableFaultInjection": false,
     "ephemeralStorage": {
         "sizeInGiB": 21
     },
