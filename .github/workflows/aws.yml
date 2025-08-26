@@ -7,7 +7,7 @@ on:
 env:
   AWS_REGION: ap-southeast-1
   ECR_REPOSITORY: blythe-server/blockchain
-  ECS_SERVICE: layanan-blockchain-service-hsprn7w
+  ECS_SERVICE: layanan-blockchain-service-hspnr87w
   ECS_CLUSTER: sophisticated-butterfly-907z6l
   ECS_TASK_DEFINITION: task-definition.json
   CONTAINER_NAME: blockchain
