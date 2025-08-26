@@ -31,14 +31,13 @@ on:
     branches: [ "master" ]
 
 env:
-  AWS_REGION: MY_AWS_REGION                   # set this to your preferred AWS region, e.g. us-west-1
-  ECR_REPOSITORY: MY_ECR_REPOSITORY           # set this to your Amazon ECR repository name
-  ECS_SERVICE: MY_ECS_SERVICE                 # set this to your Amazon ECS service name
-  ECS_CLUSTER: MY_ECS_CLUSTER                 # set this to your Amazon ECS cluster name
-  ECS_TASK_DEFINITION: MY_ECS_TASK_DEFINITION # set this to the path to your Amazon ECS task definition
-                                               # file, e.g. .aws/task-definition.json
-  CONTAINER_NAME: MY_CONTAINER_NAME           # set this to the name of the container in the
-                                               # containerDefinitions section of your task definition
+env:
+  AWS_REGION: ap-southeast-1
+  ECR_REPOSITORY: server-blythe/blockchain           # PERBAIKAN: Disesuaikan dengan nama di ECR
+  ECS_SERVICE: layanan-blockchain-service-hsprn7w
+  ECS_CLUSTER: sophisticated-butterfly-907z6l
+  ECS_TASK_DEFINITION: task-definition.json           # PERBAIKAN: Diubah menjadi path file
+  CONTAINER_NAME: blockchain
 
 permissions:
   contents: read
